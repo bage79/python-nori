@@ -86,7 +86,7 @@ class KoreanTokenizer(object):
 		self.verbose = verbose
 		self.buffer = KoreanTokenizer.Buffer()
 		self.character_definition = CharacterDefinition()
-		self.user_dict = UserDictionary.open(PATH_CUR+path_userdict)
+		self.user_dict = UserDictionary.open(path_userdict)
 		#start_main = datetime.now()
 		self.kn_dict = KnownDictionary.open(PATH_CUR+PATH_KN_DICT)
 		#end_main = datetime.now()

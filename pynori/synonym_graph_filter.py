@@ -38,13 +38,13 @@ class SynonymGraphFilter(object):
 
 	"""
 
-	def __init__(self, preprocessor, kor_tokenizer, mode_synonym):
+	def __init__(self, preprocessor, kor_tokenizer, mode_synonym, path_synonyms=None):
 		self.SEP_CHAR = '_' # separate charcter in token
 		self.preprocessor = preprocessor
 		self.kor_tokenizer = kor_tokenizer # korean_analyzer.py 에서 decompound mode가 이미 결정
 		self.mode_synonym = mode_synonym
 		self.syn_trie = None
-		self.synonym_build(PATH_CUR+PATH_SYN_DICT)
+		self.synonym_build(path_synonyms)
 		pass
 
 	def _simple_tokenizer(self, in_string):
