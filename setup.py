@@ -14,7 +14,7 @@ long_description = """
 """
 
 setup(
-    name='pynori',
+    name='bage-pynori',
     version='0.3.0',
 
     url='https://github.com/bage79/python-nori',
