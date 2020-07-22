@@ -38,8 +38,8 @@ class KoreanAnalyzer(object):
 
     def __init__(self,
                  verbose=VERBOSE,
-                 path_userdict=PATH_USER_DICT,
-                 path_synonyms=PATH_SYN_DICT,
+                 path_userdict=None,
+                 path_synonyms=None,
                  decompound_mode=DECOMPOUND_MODE,
                  infl_decompound_mode=INFL_DECOMPOUND_MODE,
                  output_unknown_unigrams=OUTPUT_UNKNOWN_UNIGRAMS,
@@ -48,15 +48,17 @@ class KoreanAnalyzer(object):
                  stop_tags=KoreanPOSStopFilter.DEFAULT_STOP_TAGS,
                  synonym_filter=USE_SYNONYM_FILTER,
                  mode_synonym=MODE_SYNONYM_FILTER):
+        PATH_CUR = os.path.dirname(__file__)
+        print('PATH_CUR:', PATH_CUR)
         self.preprocessor = Preprocessing()
-        self.kor_tokenizer = KoreanTokenizer(verbose,
-                                             path_userdict,
-                                             decompound_mode,
-                                             infl_decompound_mode,
-                                             output_unknown_unigrams,
-                                             discard_punctuation)
+        self.kor_tokenizer = KoreanTokenizer(verbose=verbose,
+                                             path_userdict=path_userdict if path_userdict else os.path.join(PATH_CUR, PATH_USER_DICT),
+                                             decompound_mode=decompound_mode,
+                                             infl_decompound_mode=infl_decompound_mode,
+                                             output_unknown_unigrams=output_unknown_unigrams,
+                                             discard_punctuation=discard_punctuation)
         self.pos_filter = pos_filter
-        self.kor_pos_filter = KoreanPOSStopFilter(stop_tags=stop_tags)
+        self.kor_pos_filter = KoreanPOSStopFilter(stop_tags=stop_tags, verbose=verbose)
         self.synonym_filter = synonym_filter
         self.mode_synonym = mode_synonym
         self.syn_graph_filter = None
@@ -64,7 +66,7 @@ class KoreanAnalyzer(object):
             self.syn_graph_filter = SynonymGraphFilter(preprocessor=self.preprocessor,
                                                        kor_tokenizer=self.kor_tokenizer,
                                                        mode_synonym=self.mode_synonym,
-                                                       path_synonyms=path_synonyms)
+                                                       path_synonyms=path_synonyms if path_synonyms else os.path.join(PATH_CUR, PATH_SYN_DICT))
 
     def do_analysis(self, in_string):
         """Analyze text input string and return tokens
@@ -154,21 +156,31 @@ if __name__ == "__main__":
     PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
     nori = KoreanAnalyzer(path_userdict=os.path.join(PROJECT_ROOT_DIR, 'data/userdict_ko.txt'),
                           path_synonyms=os.path.join(PROJECT_ROOT_DIR, 'data/synonyms.txt'),
-                          synonym_filter=True,
+                          synonym_filter=False,
                           decompound_mode=DcpdMode.DISCARD,
                           infl_decompound_mode=DcpdMode.DISCARD,
                           discard_punctuation=True,
                           output_unknown_unigrams=False,
-                          pos_filter=True, stop_tags=[
-            "NNB", "NR", "NP",
-            # "VV", "VA",
-            "VX", "VCP", "VCN", "VSV",
-            "MM",
-            "MAG", "MAJ", "IC", "JKS", "JKC", "JKG", "JKO", "JKB", "JKV", "JKQ",
-            "JX", "JC", "EP", "EF", "EC", "ETN", "ETM", "XPN", "XSN", "XSV",
-            "XSA", "XR", "SF", "SE", "SP", "SSO", "SSC", "SC", "SSC", "SSO",
-            "SY", "E", "J", "UNA", "NA"
-        ])
+                          pos_filter=False,
+                          stop_tags=[
+                              "NNB", "NR", "NP",
+                              # "VV", "VA",
+                              "VX", "VCP", "VCN", "VSV",
+                              "MM",
+                              "MAG", "MAJ", "IC", "JKS", "JKC", "JKG", "JKO", "JKB", "JKV", "JKQ",
+                              "JX", "JC", "EP", "EF", "EC", "ETN", "ETM", "XPN", "XSN", "XSV",
+                              "XSA", "XR", "SF", "SE", "SP", "SSO", "SSC", "SC", "SSC", "SSO",
+                              "SY", "E", "J", "UNA", "NA"
+                          ])
 
     # print(nori.do_analysis("아빠가 방에 들어가신다.")['termAtt'])
     print(nori.do_analysis("박혜웅은 베이지라고 불린다.")['termAtt'])
+    print(nori.do_analysis("5 G")['termAtt'])
+    print(nori.do_analysis("5 GX")['termAtt'])
+    print(nori.do_analysis("5G X")['termAtt'])
+    print(nori.do_analysis("apple pie")['termAtt'])
+    print(nori.do_analysis("a p")['termAtt'])
+    print(nori.do_analysis("4 p")['termAtt'])
+    print(nori.do_analysis("⓪ 틴")['termAtt'])
+    print(nori.do_analysis("T 플랜")['termAtt'])
+    print(nori.do_analysis("플랜 T")['termAtt'])
