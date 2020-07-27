@@ -64,8 +64,8 @@ class KoreanTokenizer(object):
     """
 
     # For safety
-    MAX_UNKNOWN_WORD_LENGTH = 1024;
-    MAX_BACKTRACE_GAP = 1024;
+    MAX_UNKNOWN_WORD_LENGTH = 1024
+    MAX_BACKTRACE_GAP = 1024
 
     def __init__(self,
                  verbose,
@@ -183,7 +183,7 @@ class KoreanTokenizer(object):
         def reset(self):
             self.count = 0
 
-    """	
+    """    
     TODO: make generic'd version of this "circular array"?
     It's a bit tricky because we do things to the Position
     (eg, set .pos = N on reuse)...
@@ -230,7 +230,7 @@ class KoreanTokenizer(object):
                 if self.count == len(self.positions):  # 같네? 그러면 늘려야지...
                     # newPositions = []
                     # for _ in range(0, self.count+1):
-                    #	newPositions.append(Position())
+                    #    newPositions.append(Position())
 
                     self.newPositions = []
                     for _ in range(0, 1 + self.count):
@@ -239,7 +239,7 @@ class KoreanTokenizer(object):
                     self.newPositions[:len(self.positions) - self.nextWrite] = self.positions[self.nextWrite:len(self.positions) - self.nextWrite]
                     self.newPositions[len(self.positions) - self.nextWrite:self.nextWrite] = self.positions[:self.nextWrite]
                     # for i in range(len(self.positions), len(self.newPositions)):
-                    #	newPositions[i] = Position()
+                    #    newPositions[i] = Position()
                     self.positions = self.newPositions[:]
 
                 if self.nextWrite == len(self.positions):
@@ -276,18 +276,18 @@ class KoreanTokenizer(object):
     # TODO: circular buffer 사용법 확인.
 
     # def freeBefore(self, pos):
-    #	toFree = self.count - (self.nextPos - pos)
-    #	assert toFree >= 0
-    #	assert toFree <= self.count
-    #	index = self.nextWrite - self.count
-    #	if index < 0:
-    #		index += len(self.positions)
-    #	for i in range(0, toFree):
-    #		if index == len(self.positions):
-    #			index = 0
-    #		self.positions[index].reset()
-    #		index += 1
-    #	self.count -= toFree
+    #    toFree = self.count - (self.nextPos - pos)
+    #    assert toFree >= 0
+    #    assert toFree <= self.count
+    #    index = self.nextWrite - self.count
+    #    if index < 0:
+    #        index += len(self.positions)
+    #    for i in range(0, toFree):
+    #        if index == len(self.positions):
+    #            index = 0
+    #        self.positions[index].reset()
+    #        index += 1
+    #    self.count -= toFree
 
     def compute_space_penalty(self, leftPOS, numSpaces):
         """Returns the space penalty associated with the provided POS.Tag.
@@ -405,10 +405,10 @@ class KoreanTokenizer(object):
             print("\nPARSE")
 
         # Index of the last character of unknown word:
-        unknownWordEndIndex = -1;
+        unknownWordEndIndex = -1
 
         # Maximum posAhead of user word in the entire input
-        userWordMaxPosAhead = -1;
+        userWordMaxPosAhead = -1
 
         ## Advances over each position (character):
         while True:
@@ -446,7 +446,7 @@ class KoreanTokenizer(object):
                     return
                 else:
                     """ This means the backtrace only produced
-                    punctuation tokens, so we must keep parsing	"""
+                    punctuation tokens, so we must keep parsing    """
 
             if self.pos - self.last_backtrace_pos >= self.MAX_BACKTRACE_GAP:  # 예외처리.
                 """ Safety: if we've buffered too much, force a
@@ -563,7 +563,8 @@ class KoreanTokenizer(object):
                     if wordIdRef is not None:
                         if self.verbose:
                             # if True:
-                            print("    KNOWN word " + self.buffer.slice_get(self.pos, posAhead - self.pos + 1) + " toPos=" + str(posAhead + 1) + " " + str(len(wordIdRef)) + " wordIDs")
+                            # print("    KNOWN word " + self.buffer.slice_get(self.pos, posAhead - self.pos + 1) + " toPos=" + str(posAhead + 1) + " " + str(len(wordIdRef)) + " wordIDs")
+                            pass
                         for each in wordIdRef.result:
                             self.add(each, posData, self.pos, posAhead + 1, None, Type.KNOWN)
                             anyMatches = True
@@ -805,7 +806,7 @@ class KoreanTokenizer(object):
         self.last_backtrace_pos = endPos
 
     # if self.verbose:
-    #	print("  freeBefore pos=" + str(endPos))
+    #    print("  freeBefore pos=" + str(endPos))
 
     # TODO: circular buffer 효용성 확인 필요.
     # Notify the circular buffers that we are done with these positions:

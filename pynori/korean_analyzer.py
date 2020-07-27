@@ -49,7 +49,7 @@ class KoreanAnalyzer(object):
                  synonym_filter=USE_SYNONYM_FILTER,
                  mode_synonym=MODE_SYNONYM_FILTER):
         PATH_CUR = os.path.dirname(__file__)
-        print('PATH_CUR:', PATH_CUR)
+        print('pynori root:', PATH_CUR)
         self.preprocessor = Preprocessing()
         self.kor_tokenizer = KoreanTokenizer(verbose=verbose,
                                              path_userdict=path_userdict if path_userdict else os.path.join(PATH_CUR, PATH_USER_DICT),
