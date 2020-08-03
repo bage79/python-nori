@@ -12,25 +12,25 @@ class DecompoundToken(Token):
 
 # @Override
 # def getPOSType(self):
-#	""" Get the {@link POS.Type} of the token. """
-#	return POS.Type.MORPHEME
+#    """ Get the {@link POS.Type} of the token. """
+#    return POS.Type.MORPHEME
 
 # @Override
 # def getLeftPOS(self):
-#	""" Get the left part of speech of the token. """
-#	return self.posTag
+#    """ Get the left part of speech of the token. """
+#    return self.posTag
 
 # @Override
 # def getRightPOS(self):
-#	""" Get the right part of speech of the token. """
-#	return self.posTag
+#    """ Get the right part of speech of the token. """
+#    return self.posTag
 
 # @Override
 # def getReading(self):
-#	""" Get the reading of the token. """
-#	return None
+#    """ Get the reading of the token. """
+#    return None
 
 # @Override
 # def getMorphemes(self):
-#	""" Get the {@link Morpheme} decomposition of the token. """
-#	return None
+#    """ Get the {@link Morpheme} decomposition of the token. """
+#    return None

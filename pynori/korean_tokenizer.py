@@ -1,8 +1,10 @@
+import gc
 import os
 import sys
 import unicodedata
 from configparser import ConfigParser
 
+from appliednl_faq.utils.memory_leak_util import MemoryLeakUtil
 from pynori.char_unicode import *
 from pynori.decompound_token import DecompoundToken
 from pynori.dict.character_definition import CharacterDefinition, character_category_map
@@ -82,21 +84,18 @@ class KoreanTokenizer(object):
         self.buffer = KoreanTokenizer.Buffer()
         self.character_definition = CharacterDefinition()
         self.user_dict = UserDictionary.open(path_userdict)
-        # start_main = datetime.now()
         self.kn_dict = KnownDictionary.open(PATH_CUR + PATH_KN_DICT)
-        # end_main = datetime.now()
-        # print('\n RUN TIME: {}\n'.format(end_main - start_main))
         self.unk_dict = UnknownDictionary.open(PATH_CUR + PATH_UNK_DICT)
         self.conn_costs = ConnectionCosts.open(PATH_CUR + PATH_CONN_COST)
         self.reset_state()
 
+    # noinspection PyAttributeOutsideInit
     def reset_state(self):
         self.pos = 0
         self.end = False
         self.last_backtrace_pos = 0
         self.positions = KoreanTokenizer.WrappedPositionArray()
         self.tkn_attr_obj = TokenAttribute()
-        # Already parsed, but not yet passed to caller, tokens
         self.pending = []
         # Add BOS
         self.positions.get(0).add(0, 0, -1, -1, -1, -1, Type.KNOWN, None, None, None)
@@ -124,7 +123,7 @@ class KoreanTokenizer(object):
             self.in_string = in_string
 
         def get(self, pos):
-            if pos >= 0 and pos <= len(self.in_string) - 1:
+            if 0 <= pos <= len(self.in_string) - 1:
                 result = self.in_string[pos]
             else:
                 result = -1
@@ -265,7 +264,7 @@ class KoreanTokenizer(object):
 
         def in_bounds(self, pos):
             # For assert
-            return pos < self.nextPos and pos >= self.nextPos - self.count
+            return self.nextPos > pos >= self.nextPos - self.count
 
         def get_index(self, pos):
             index = self.nextWrite - (self.nextPos - pos)

@@ -1,3 +1,5 @@
+import copy
+import gc
 import os
 from configparser import ConfigParser
 
@@ -76,7 +78,7 @@ class KoreanAnalyzer(object):
 
         ##################
         # Pre-processing #
-        ##################
+        #################
         in_string = self.preprocessor.pipeline(in_string)
 
         ##############

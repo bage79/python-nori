@@ -15,7 +15,7 @@ long_description = """
 
 setup(
     name='bage-pynori',
-    version='0.3.2',
+    version='0.3.3',
 
     url='https://github.com/bage79/python-nori',
     author='Yeongsu Kim',

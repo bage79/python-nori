@@ -20,31 +20,31 @@ class DictionaryToken(Token):  # Abstract Class
         return self.dictType
 
 # def isKnown(self):
-#	return self.dictType == Type.KNOWN
+#    return self.dictType == Type.KNOWN
 
 # def isUnknown(self):
-#	return self.dictType == Type.UNKNOWN
+#    return self.dictType == Type.UNKNOWN
 
 # def isUser(self):
-#	return self.dictType == Type.USER
+#    return self.dictType == Type.USER
 
 # @Override
 # def getPOSType(self):
-#	return self.dictionary.getPOSType(self.wordId)
+#    return self.dictionary.getPOSType(self.wordId)
 
 # @Override
 # def getLeftPOS(self):
-#	return self.dictionary.getLeftPOS(self.wordId)
+#    return self.dictionary.getLeftPOS(self.wordId)
 
 # @Override
 # def getRightPOS(self):
-#	return self.dictionary.getRightPOS(self.wordId)
+#    return self.dictionary.getRightPOS(self.wordId)
 
 # @Override
 # def getReading(self):
-#	return self.dictionary.getReading(self.wordId)
+#    return self.dictionary.getReading(self.wordId)
 
 # @Override
 # def getMorphemes(self):
-#	return self.dictionary.getMorphemes(self.wordId, super().getSurfaceForm(), super().getOffset(), super().getLength())
-#	dictionary 에서 빼오는 작업은 하지 않는다.
+#    return self.dictionary.getMorphemes(self.wordId, super().getSurfaceForm(), super().getOffset(), super().getLength())
+#    dictionary 에서 빼오는 작업은 하지 않는다.

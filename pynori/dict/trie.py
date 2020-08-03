@@ -1,10 +1,9 @@
-
 class Node(object):
     def __init__(self, key, data=None, result=None):
         self.key = key
         self.data = data
-        #self.flag_ing = False
-        #self.flag_end = False # whether or not leaf node 
+        # self.flag_ing = False
+        # self.flag_end = False # whether or not leaf node
         self.result = []
         if result is not None:
             self.result.append(result)
@@ -20,37 +19,37 @@ class Trie(object):
 
     def __init__(self):
         self.head = Node(key=None)
-        
+
     def insert(self, string, result):
-        cur_node = self.head # pivot
-        
+        cur_node = self.head  # pivot
+
         for char_key in string:
             if char_key not in cur_node.children:
-                cur_node.children[char_key] = Node(char_key) # make node
-            cur_node = cur_node.children[char_key] # update pivot
-            #cur_node.flag_end = False # re-init for new overlapping string, while iterating.
-            #cur_node.flag_ing = True
-            
+                cur_node.children[char_key] = Node(char_key)  # make node
+            cur_node = cur_node.children[char_key]  # update pivot
+            # cur_node.flag_end = False # re-init for new overlapping string, while iterating.
+            # cur_node.flag_ing = True
+
         # now cur_node is leaf node
-        #if len(cur_node.children) == 0: # leaf-node: not have child node
+        # if len(cur_node.children) == 0: # leaf-node: not have child node
         #    cur_node.flag_end = True
         cur_node.data = string
         if result not in cur_node.result:
             cur_node.result.append(result)
-        
+
     def search(self, string):
         cur_node = self.head
-        
+
         for char_key in string:
             if char_key in cur_node.children:
                 cur_node = cur_node.children[char_key]
             else:
                 return (False, None)
-                #return cur_node
-            
+                # return cur_node
+
         if cur_node.data is not None:
-            return (True, cur_node) # cur_node.result or cur_node.flag
-        
+            return (True, cur_node)  # cur_node.result or cur_node.flag
+
         return (True, None)
 
 
@@ -76,4 +75,3 @@ if __name__ == "__main__":
         print(test_trie.search(token).result)
         print(test_trie.search(token).flag)
         print('\n')
- 
